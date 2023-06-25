@@ -23,7 +23,7 @@ To run this example project, you'll need:
 2. The [DotNet Software Development Kit (SDK)](https://dotnet.microsoft.com/en-us/download) Standard 2.0 or higher.
 3. A good C# editor, such as [Visual Studio](https://visualstudio.microsoft.com/) or [IntelliJ Rider](https://www.jetbrains.com/rider/).
 
-The main test case is [`AcmeBankTests.cs`](src/AcmeBankTests.cs).
+The main test case is [`AcmeBankTests.cs`](Applitools.Example.Tests/AcmeBankTests.cs).
 By default, the project will run tests with Ultrafast Grid.
 You can change these settings in the test class.
 
