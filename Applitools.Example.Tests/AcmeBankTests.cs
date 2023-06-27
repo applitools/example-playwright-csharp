@@ -17,31 +17,30 @@ public class AcmeBankTests
     // It runs the test once locally.
     // If you use the Ultrafast Grid, then it performs cross-browser testing against multiple unique browsers.
 
+    #pragma warning disable CS8618
+
     // Runner Settings.
     // These could be set by environment variables or other input mechanisms.
     // They are hard-coded here to keep the example project simple.
-    private static readonly bool USE_ULTRAFAST_GRID = true;
+    private static readonly bool UseUltrafastGrid = true;
 
     // Test control inputs to read once and share for all tests
-    private static string applitoolsApiKey_;
-    private static bool headless_;
+    private static string? ApplitoolsApiKey;
+    private static bool Headless;
 
     // Applitools objects to share for all tests
-    private static BatchInfo batch_;
-    private static Configuration config_;
-    private static PlaywrightEyesRunner runner_;
+    private static BatchInfo Batch;
+    private static Configuration Config;
+    private static PlaywrightEyesRunner Runner;
 
     // Test-specific objects
-    private static IPlaywright playwright_;
-    private static IBrowser browser_;
-    private IBrowserContext context_;
-    private IPage page_;
-    private Eyes eyes_;
+    private static IPlaywright Playwright;
+    private static IBrowser Browser;
+    private IBrowserContext Context;
+    private IPage Page;
+    private Eyes Eyes;
 
-    [SetUp]
-    public void Setup()
-    {
-    }
+    #pragma warning restore CS8618
 
     [OneTimeSetUp]
     public static async Task SetUpConfigAndRunner()
@@ -51,62 +50,62 @@ public class AcmeBankTests
         // If you have more than one test class, then you should abstract this configuration to avoid duplication.
 
         // Read the Applitools API key from an environment variable.
-        applitoolsApiKey_ = Environment.GetEnvironmentVariable("APPLITOOLS_API_KEY");
+        ApplitoolsApiKey = Environment.GetEnvironmentVariable("APPLITOOLS_API_KEY");
 
         // Read the headless mode setting from an environment variable.
         // Use headless mode for Continuous Integration (CI) execution.
         // Use headed mode for local development.
-        headless_ = bool.Parse(Environment.GetEnvironmentVariable("HEADLESS") ?? "true");
+        Headless = bool.Parse(Environment.GetEnvironmentVariable("HEADLESS") ?? "true");
 
-        if (USE_ULTRAFAST_GRID)
+        if (UseUltrafastGrid)
         {
             // Create the runner for the Ultrafast Grid.
             // Concurrency refers to the number of visual checkpoints Applitools will perform in parallel.
             // Warning: If you have a free account, then concurrency will be limited to 1.
-            runner_ = new VisualGridRunner(new RunnerOptions().TestConcurrency(5));
+            Runner = new VisualGridRunner(new RunnerOptions().TestConcurrency(5));
         }
         else
         {
             // Create the Classic runner.
-            runner_ = new ClassicRunner();
+            Runner = new ClassicRunner();
         }
 
         // Create a new batch for tests.
         // A batch is the collection of visual checkpoints for a test suite.
         // Batches are displayed in the Eyes Test Manager, so use meaningful names.
-        string runnerName = (USE_ULTRAFAST_GRID) ? "Ultrafast Grid" : "Classic runner";
-        batch_ = new BatchInfo("Example: Playwright C# NUnit with the " + runnerName);
+        string runnerName = (UseUltrafastGrid) ? "Ultrafast Grid" : "Classic runner";
+        Batch = new BatchInfo("Example: Playwright C# with the " + runnerName);
 
         // Create a configuration for Applitools Eyes.
-        config_ = new Configuration();
+        Config = new Configuration();
 
         // Set the Applitools API key so test results are uploaded to your account.
         // If you don't explicitly set the API key with this call,
         // then the SDK will automatically read the `APPLITOOLS_API_KEY` environment variable to fetch it.
-        config_.SetApiKey(applitoolsApiKey_);
+        Config.SetApiKey(ApplitoolsApiKey);
 
         // Set the batch for the config.
-        config_.SetBatch(batch_);
+        Config.SetBatch(Batch);
 
         // If running tests on the Ultrafast Grid, configure browsers.
-        if (USE_ULTRAFAST_GRID)
+        if (UseUltrafastGrid)
         {
             // Add 3 desktop browsers with different viewports for cross-browser testing in the Ultrafast Grid.
             // Other browsers are also available, like Edge and IE.
-            config_.AddBrowser(800, 600, BrowserType.CHROME);
-            config_.AddBrowser(1600, 1200, BrowserType.FIREFOX);
-            config_.AddBrowser(1024, 768, BrowserType.SAFARI);
+            Config.AddBrowser(800, 600, BrowserType.CHROME);
+            Config.AddBrowser(1600, 1200, BrowserType.FIREFOX);
+            Config.AddBrowser(1024, 768, BrowserType.SAFARI);
 
             // Add 2 mobile emulation devices with different orientations for cross-browser testing in the Ultrafast Grid.
             // Other mobile devices are available, including iOS.
-            config_.AddDeviceEmulation(DeviceName.Pixel_2, ScreenOrientation.Portrait);
-            config_.AddDeviceEmulation(DeviceName.Nexus_10, ScreenOrientation.Landscape);
+            Config.AddDeviceEmulation(DeviceName.Pixel_2, ScreenOrientation.Portrait);
+            Config.AddDeviceEmulation(DeviceName.Nexus_10, ScreenOrientation.Landscape);
         }
 
         // Start Playwright and launch the browser.
-        playwright_ = await Playwright.CreateAsync();
-        browser_ = await playwright_.Chromium
-            .LaunchAsync(new BrowserTypeLaunchOptions { Headless = headless_ });
+        Playwright = await Microsoft.Playwright.Playwright.CreateAsync();
+        Browser = await Playwright.Chromium
+            .LaunchAsync(new BrowserTypeLaunchOptions { Headless = Headless });
     }
 
     [SetUp]
@@ -115,22 +114,23 @@ public class AcmeBankTests
         // This method sets up each test with its own Page and Applitools Eyes objects.
 
         // Get a new context from the browser
-        context_ = await browser_.NewContextAsync();
+        Context = await Browser.NewContextAsync();
 
         // Create a new page in the context.
         // Creating a new context is not mandatory and a new page can be created from the browser instance.
         // page_ = await browser_.NewPageAsync();
-        page_ = await context_.NewPageAsync();
+        Page = await Context.NewPageAsync();
 
         // Create the Applitools Eyes object connected to the runner and set its configuration.
-        eyes_ = new Eyes(runner_);
-        eyes_.SetConfiguration(config_);
+        Eyes = new Eyes(Runner);
+        Eyes.SetConfiguration(Config);
 
         // Open Eyes to start visual testing.
         // It is a recommended practice to set all four inputs:
-        eyes_.Open(
+        Eyes.Open(
+            
             // The page to "watch".
-            page_,
+            Page,
 
             // The name of the application under test.
             // All tests for the same app should share the same app name.
@@ -158,19 +158,19 @@ public class AcmeBankTests
         // Traditional assertions that scrape the page for text values are not needed here.
 
         // Load the login page.
-        await page_.GotoAsync("https://demo.applitools.com");
+        await Page.GotoAsync("https://demo.applitools.com");
 
         // Verify the full login page loaded correctly.
-        eyes_.Check(Target.Window().Fully().WithName("Login page"));
+        Eyes.Check(Target.Window().Fully().WithName("Login page"));
 
         // Perform login.
-        await page_.Locator("#username").FillAsync("andy");
-        await page_.Locator("#password").FillAsync("i<3pandas");
-        await page_.Locator("#log-in").ClickAsync();
+        await Page.Locator("#username").FillAsync("andy");
+        await Page.Locator("#password").FillAsync("i<3pandas");
+        await Page.Locator("#log-in").ClickAsync();
 
         // Verify the full main page loaded correctly.
         // This snapshot uses LAYOUT match level to avoid differences in closing time text.
-        eyes_.Check(Target.Window().Fully().WithName("Main page").Layout());
+        Eyes.Check(Target.Window().Fully().WithName("Main page").Layout());
     }
 
     [TearDown]
@@ -178,10 +178,10 @@ public class AcmeBankTests
     public async Task CleanUpTest()
     {
         // Close Eyes to tell the server it should display the results.
-        eyes_.CloseAsync();
+        Eyes.CloseAsync();
 
         // Close the page.
-        await page_.CloseAsync();
+        await Page.CloseAsync();
 
         // Warning: `eyes_.CloseAsync()` will NOT wait for visual checkpoints to complete.
         // You will need to check the Eyes Test Manager for visual results per checkpoint.
@@ -195,11 +195,11 @@ public class AcmeBankTests
     public static void PrintResults()
     {
         // Close the Playwright instance.
-        playwright_.Dispose();
+        Playwright.Dispose();
 
         // Close the batch and report visual differences to the console.
         // Note that it forces JUnit to wait synchronously for all visual checkpoints to complete.
-        TestResultsSummary allTestResults = runner_.GetAllTestResults();
+        TestResultsSummary allTestResults = Runner.GetAllTestResults();
         TestContext.Out.WriteLine(allTestResults);
     }
 }
