@@ -1,4 +1,4 @@
-# Applitools Example: Playwright in C# with NUnit
+# Applitools Example: Playwright in C#
 
 This is the example project for the [Playwright C# tutorial](https://applitools.com/tutorials/quickstart/web/playwright/csharp).
 It shows how to start automating visual tests
@@ -7,7 +7,7 @@ and [Playwright](https://playwright.dev/dotnet) in C#.
 
 It uses:
 
-* [DotNet](https://www.dot.net/) as the programming language
+* [C#](https://learn.microsoft.com/en-us/dotnet/csharp/) as the programming language
 * [Playwright](https://playwright.dev/dotnet) for browser automation
 * [Chromium](https://www.chromium.org/chromium-projects/) as the local browser for testing
 * [NUnit](https://nunit.org/) as the core test framework
@@ -20,8 +20,9 @@ It can also run tests with:
 To run this example project, you'll need:
 
 1. An [Applitools account](https://auth.applitools.com/users/register), which you can register for free.
-2. The [DotNet Software Development Kit (SDK)](https://dotnet.microsoft.com/en-us/download) Standard 2.0 or higher.
-3. A good C# editor, such as [Visual Studio](https://visualstudio.microsoft.com/) or [IntelliJ Rider](https://www.jetbrains.com/rider/).
+2. A good C# editor, such as [Microsoft Visual Studio](https://visualstudio.microsoft.com/)
+   or [Visual Studio Code](https://code.visualstudio.com/docs/languages/csharp).
+3. The [.NET 7](https://dotnet.microsoft.com/en-us/download/dotnet/7.0) SDK (which may come bundled with Visual Studio).
 
 The main test case is [`AcmeBankTests.cs`](Applitools.Example.Tests/AcmeBankTests.cs).
 By default, the project will run tests with Ultrafast Grid.
