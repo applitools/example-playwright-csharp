@@ -33,6 +33,7 @@ to your [account's API key](https://applitools.com/tutorials/guides/getting-star
 and then run:
 
 ```
+dotnet build
 pwsh Applitools.Example.Tests/bin/Debug/net7.0/playwright.ps1 install
 dotnet test
 ```
