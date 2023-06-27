@@ -28,7 +28,7 @@ jobs:
         run: dotnet build
       
       - name: Install Playwright browsers
-        run: pwsh bin/Debug/net7.0/playwright.ps1 install --with-deps
+        run: pwsh Applitools.Example.Tests/bin/Debug/net7.0/playwright.ps1 install --with-deps
 
       - name: Run the example tests
         run: dotnet test --no-build --verbosity normal

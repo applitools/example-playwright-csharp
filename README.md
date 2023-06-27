@@ -33,9 +33,12 @@ to your [account's API key](https://applitools.com/tutorials/guides/getting-star
 and then run:
 
 ```
-pwsh bin/Debug/net7.0/playwright.ps1 install
+pwsh Applitools.Example.Tests/bin/Debug/net7.0/playwright.ps1 install
 dotnet test
 ```
+
+If `pwsh` is not available,
+you must [install PowerShell](https://docs.microsoft.com/powershell/scripting/install/installing-powershell).
 
 **For full instructions on running this project, take our
 [Playwright C# tutorial](https://applitools.com/tutorials/quickstart/web/playwright/csharp)!**
